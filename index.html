@@ -1,4 +1,63 @@
-<!-- ================= PLUS2 MOVIE SYSTEM ================= -->
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 50% 0%, #26000b 0%, #090506 35%, #020202 100%) !important;
+  color: #fff !important;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Saare sections dark rahenge */
+section,
+main,
+header,
+nav {
+  color: #fff;
+}
+
+/* Normal text */
+p {
+  color: #bdbdbd;
+}
+
+/* Heading */
+h1, h2, h3 {
+  color: #fff;
+}
+
+/* PLUS2 red glow */
+h2 {
+  text-shadow:
+    0 0 8px #ff003c,
+    0 0 20px #ff003c55;
+}
+
+/* Input placeholder */
+::placeholder {
+  color: #777;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .movie-card {
+    padding: 10px;
+  }
+
+  .admin-box {
+    margin: 20px 10px;
+  }
+}<!-- ================= PLUS2 MOVIE SYSTEM ================= -->
 
 <section id="admin" class="admin-box">
   <h2>🎬 Add Movie by Link</h2>

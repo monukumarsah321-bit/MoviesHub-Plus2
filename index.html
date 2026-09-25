@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>PLUS2</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  color:#fff;
+  background:
+    radial-gradient(circle at 50% -10%,#560018 0%,#18060f 28%,#070507 60%,#000 100%);
+  overflow-x:hidden;
+}
+
+/* background */
+body::before{
+  content:"";
+  position:fixed;
+  width:520px;
+  height:520px;
+  top:-280px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ff174f;
+  opacity:.08;
+  filter:blur(110px);
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* NAVBAR */
+
+.navbar{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:14px 20px;
+
+  background:rgba(3,2,4,.92);
+  backdrop-filter:blur(16px);
+
+  border-bottom:1px solid #470014;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:4px;
+
+  text-shadow:
+    0 0 8px #ff174f,
+    0 0 22px #ff174f,
+    0 0 40px #c477ff;
+}
+
+.nav-btn{
+  border:0;
+  background:transparent;
+  color:#fff;
+  font-size:23px;
+  cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+  min-height:310px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+  padding:45px 20px;
+
+  background:
+    radial-gradient(
+      circle,
+      #65001b 0%,
+      #280610 30%,
+      transparent 70%
+    );
+}
+
+.hero h1{
+  font-size:56px;
+  font-weight:900;
+  letter-spacing:6px;
+
+  text-shadow:
+    0 0 10px #ff174f,
+    0 0 30px #ff174f,
+    0 0 65px #9d0030;
+}
+
+.hero p{
+  margin-top:14px;
+  color:#c9c1c8;
+}
+
+.hero-line{
+  width:190px;
+  height:3px;
+  margin-top:22px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    #ff174f,
+    #d58aff,
+    #ff174f,
+    transparent
+  );
+
+  box-shadow:
+    0 0 14px #ff174f,
+    0 0 20px #c477ff;
+}
+
+/* CONTAINER */
+
+.container{
+  width:100%;
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+/* ADMIN */
+
+.admin-box{
+  max-width:720px;
+  margin:20px auto 35px;
+
+  padding:25px;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(145deg,#1b050d,#090508);
+
+  border:1px solid #62001d;
+
+  box-shadow:
+    0 0 25px #ff174f15,
+    inset 0 0 30px #c477ff08;
+}
+
+.admin-box h2{
+  margin-bottom:18px;
+
+  text-shadow:
+    0 0 8px #ff174f,
+    0 0 15px #c477ff55;
+}
+
+.input,
+.select,
+.textarea{
+  width:100%;
+
+  margin:7px 0;
+  padding:14px;
+
+  border-radius:12px;
+
+  border:1px solid #450012;
+
+  background:#050405;
+  color:#fff;
+
+  outline:none;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus{
+  border-color:#ff174f;
+
+  box-shadow:
+    0 0 10px #ff174f55,
+    0 0 18px #c477ff22;
+}
+
+.textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+/* poster upload */
+
+.poster-label{
+  display:block;
+
+  margin-top:8px;
+  margin-bottom:4px;
+
+  color:#bbb;
+  font-size:13px;
+}
+
+.poster-input{
+  width:100%;
+  padding:12px;
+
+  border-radius:12px;
+
+  border:1px dashed #72001d;
+
+  background:#050405;
+  color:#aaa;
+}
+
+.poster-preview{
+  display:none;
+
+  width:110px;
+  height:150px;
+
+  margin-top:10px;
+
+  object-fit:cover;
+
+  border-radius:10px;
+
+  border:1px solid #ff174f;
+
+  box-shadow:
+    0 0 15px #ff174f55;
+}
+
+.add-btn{
+  margin-top:12px;
+
+  padding:13px 22px;
+
+  border:0;
+  border-radius:11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff174f,
+      #8f0027
+    );
+
+  color:#fff;
+  font-weight:bold;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 0 15px #ff174f44;
+}
+
+.add-btn:active{
+  transform:scale(.95);
+
+  box-shadow:
+    0 0 30px #ff174f,
+    0 0 45px #c477ff66;
+}
+
+/* SECTION */
+
+.section-title{
+  margin:25px 0 18px;
+
+  font-size:24px;
+
+  text-shadow:
+    0 0 8px #ff174f;
+}
+
+/* FILTERS */
+
+.filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+
+  margin-bottom:20px;
+}
+
+.filter-btn{
+  border:1px solid #570018;
+
+  background:#0a0508;
+
+  color:#ccc;
+
+  padding:9px 14px;
+
+  border-radius:20px;
+
+  cursor:pointer;
+}
+
+.filter-btn.active,
+.filter-btn:active{
+  color:#fff;
+
+  background:#78001f;
+
+  border-color:#ff174f;
+
+  box-shadow:
+    0 0 15px #ff174f66;
+}
+
+/* GRID */
+
+.movie-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fill,
+      minmax(220px,1fr)
+    );
+
+  gap:20px;
+}
+
+/* CARD */
+
+.movie-card{
+  position:relative;
+
+  overflow:hidden;
+
+  padding:10px;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(145deg,#1a050c,#080507);
+
+  border:1px solid #4c0014;
+
+  box-shadow:
+    0 0 15px #ff174f12;
+
+  transition:.3s;
+}
+
+.movie-card:hover{
+  transform:translateY(-5px);
+
+  box-shadow:
+    0 0 18px #ff174f50,
+    0 0 30px #c477ff20;
+}
+
+.movie-card::before{
+  content:"";
+
+  position:absolute;
+  inset:-5px;
+
+  border-radius:25px;
+
+  background:
+    conic-gradient(
+      transparent,
+      transparent 20%,
+      #ff174f,
+      #ff174f,
+      #c477ff,
+      transparent 50%,
+      transparent 75%,
+      #ff174f,
+      transparent
+    );
+
+  opacity:0;
+
+  filter:blur(9px);
+
+  pointer-events:none;
+}
+
+.movie-card.active::before{
+  opacity:1;
+
+  animation:
+    borderSpin 1.1s ease-out;
+}
+
+@keyframes borderSpin{
+  0%{
+    transform:rotate(0deg) scale(.8);
+    opacity:0;
+  }
+
+  20%{
+    opacity:1;
+  }
+
+  100%{
+    transform:rotate(360deg) scale(1.15);
+    opacity:0;
+  }
+}
+
+.movie-card>*{
+  position:relative;
+  z-index:2;
+}
+
+/* POSTER */
+
+.poster{
+  width:100%;
+
+  aspect-ratio:2/3;
+
+  object-fit:cover;
+
+  display:block;
+
+  border-radius:14px;
+
+  background:#030303;
+
+  border:1px solid #32000c;
+}
+
+.movie-card.active .poster{
+  box-shadow:
+    0 0 10px #ff174f,
+    0 0 28px #ff174f,
+    0 0 40px #c477ff33;
+}
+
+.movie-info{
+  padding:10px 3px 6px;
+}
+
+.movie-title{
+  font-size:17px;
+  font-weight:bold;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.meta{
+  margin-top:6px;
+
+  color:#aaa;
+
+  font-size:12px;
+}
+
+.rating{
+  color:#ffd36a;
+}
+
+/* BUTTONS */
+
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.action-btn{
+  flex:1;
+
+  min-width:70px;
+
+  padding:10px 6px;
+
+  border:0;
+  border-radius:9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e9003e,
+      #76001c
+    );
+
+  color:#fff;
+
+  font-weight:bold;
+  font-size:11px;
+
+  text-decoration:none;
+  text-align:center;
+
+  cursor:pointer;
+}
+
+.action-btn:active{
+  transform:scale(.92);
+
+  box-shadow:
+    0 0 20px #ff174f,
+    0 0 30px #c477ff55;
+}
+
+/* SPARK */
+
+.spark{
+  position:fixed;
+
+  width:5px;
+  height:5px;
+
+  border-radius:50%;
+
+  background:#ff174f;
+
+  z-index:99999;
+
+  pointer-events:none;
+
+  box-shadow:
+    0 0 7px #ff174f,
+    0 0 15px #ff174f,
+    0 0 22px #c477ff;
+  
+  animation:
+    sparkMove .7s ease-out forwards;
+}
+
+@keyframes sparkMove{
+  to{
+    transform:
+      translate(var(--x),var(--y))
+      scale(0);
+
+    opacity:0;
+  }
+}
+
+/* FLASH */
+
+#flash{
+  position:fixed;
+  inset:0;
+
+  background:#ff174f;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  z-index:99998;
+}
+
+#flash.show{
+  animation:flash .2s ease-out;
+}
+
+@keyframes flash{
+  0%{
+    opacity:.12;
+  }
+
+  100%{
+    opacity:0;
+  }
+}
+
+/* EMPTY */
+
+.empty{
+  grid-column:1/-1;
+
+  padding:40px;
+
+  color:#777;
+
+  text-align:center;
+}
+
+/* FOOTER */
+
+footer{
+  margin-top:60px;
+
+  padding:30px;
+
+  text-align:center;
+
+  color:#666;
+
+  border-top:1px solid #260009;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .hero{
+    min-height:270px;
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+
+  .container{
+    padding:12px;
+  }
+
+  .movie-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+
+    gap:10px;
+  }
+
+  .movie-card{
+    padding:8px;
+    border-radius:15px;
+  }
+
+  .movie-title{
+    font-size:14px;
+  }
+
+  .action-btn{
+    font-size:9px;
+    padding:9px 4px;
+  }
+
+  .admin-box{
+    padding:18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+  <div class="logo">
+    PLUS2
+  </div>
+
+  <button
+    class="nav-btn"
+    onclick="tapEffect(event)"
+  >
+    ☰
+  </button>
+
+</nav>
+
+
+<section class="hero">
+
+  <h1>PLUS2</h1>
+
+  <p>Premium Movies Experience</p>
+
+  <div class="hero-line"></div>
+
+</section>
+
+
+<main class="container">
+
+<!-- ADD MOVIE -->
+
+<section class="admin-box">
+
+  <h2>🎬 Add Movie</h2>
+
+  <input
+    class="input"
+    id="movieTitle"
+    type="text"
+    placeholder="Movie name"
+  >
+
+  <label class="poster-label">
+    🖼️ Upload Poster
+  </label>
+
+  <input
+    class="poster-input"
+    id="posterFile"
+    type="file"
+    accept="image/*"
+    onchange="previewPoster(event)"
+  >
+
+  <img
+    id="posterPreview"
+    class="poster-preview"
+    alt="Poster preview"
+  >
+
+  <input
+    class="input"
+    id="posterUrl"
+    type="url"
+    placeholder="Or paste poster image URL"
+  >
+
+  <select
+    class="select"
+    id="category"
+  >
+    <option value="Bollywood">🇮🇳 Bollywood</option>
+    <option value="South Indian">🎬 South Indian</option>
+    <option value="Hollywood">🌎 Hollywood</option>
+    <option value="Web Series">📺 Web Series</option>
+    <option value="Trending">🔥 Trending</option>
+  </select>
+
+  <input
+    class="input"
+    id="year"
+    type="number"
+    placeholder="Release year"
+  >
+
+  <input
+    class="input"
+    id="rating"
+    type="number"
+    min="0"
+    max="10"
+    step="0.1"
+    placeholder="Rating e.g. 8.2"
+  >
+
+  <textarea
+    class="textarea"
+    id="description"
+    placeholder="Movie description"
+  ></textarea>
+
+  <input
+    class="input"
+    id="movieLink"
+    type="url"
+    placeholder="Paste movie / video URL"
+  >
+
+  <button
+    class="add-btn"
+    onclick="addMovie(event)"
+  >
+    ＋ ADD MOVIE
+  </button>
+
+</section>
+
+
+<h2 class="section-title">
+  🔥 PLUS2 MOVIES
+</h2>
+
+
+<!-- FILTERS -->
+
+<div class="filters">
+
+  <button
+    class="filter-btn active"
+    onclick="setFilter('All',this)"
+  >
+    All
+  </button>
+
+  <button
+    class="filter-btn"
+    onclick="setFilter('Bollywood',this)"
+  >
+    Bollywood
+  </button>
+
+  <button
+    class="filter-btn"
+    onclick="setFilter('South Indian',this)"
+  >
+    South
+  </button>
+
+  <button
+    class="filter-btn"
+    onclick="setFilter('Hollywood',this)"
+  >
+    Hollywood
+  </button>
+
+  <button
+    class="filter-btn"
+    onclick="setFilter('Web Series',this)"
+  >
+    Web Series
+  </button>
+
+</div>
+
+
+<div
+  id="movieGrid"
+  class="movie-grid"
+></div>
+
+</main>
+
+
+<footer>
+  © 2026 PLUS2
+</footer>
+
+
+<div id="flash"></div>
+
+
+<script>
+
+/* ================================
+   STORAGE
+================================ */
+
+let movies =
+  JSON.parse(
+    localStorage.getItem(
+      "PLUS2_MOVIES"
+    ) || "[]"
+  );
+
+let currentFilter = "All";
+
+let posterData = "";
+
+
+/* ================================
+   POSTER PREVIEW
+================================ */
+
+function previewPoster(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file){
+    return;
+  }
+
+  if(!file.type.startsWith("image/")){
+
+    alert("Image file select karo.");
+
+    event.target.value="";
+
+    return;
+  }
+
+  const reader =
+    new FileReader();
+
+  reader.onload=function(){
+
+    posterData =
+      reader.result;
+
+    const preview =
+      document.getElementById(
+        "posterPreview"
+      );
+
+    preview.src =
+      posterData;
+
+    preview.style.display =
+      "block";
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
+/* ================================
+   ADD MOVIE
+================================ */
+
+function addMovie(event){
+
+  event.stopPropagation();
+
+  const title =
+    document
+      .getElementById("movieTitle")
+      .value
+      .trim();
+
+  const movieLink =
+    document
+      .getElementById("movieLink")
+      .value
+      .trim();
+
+  const posterUrl =
+    document
+      .getElementById("posterUrl")
+      .value
+      .trim();
+
+  const category =
+    document
+      .getElementById("category")
+      .value;
+
+  const year =
+    document
+      .getElementById("year")
+      .value
+      .trim();
+
+  const rating =
+    document
+      .getElementById("rating")
+      .value
+      .trim();
+
+  const description =
+    document
+      .getElementById("description")
+      .value
+      .trim();
+
+
+  if(!title){
+
+    alert(
+      "Movie name bharo."
+    );
+
+    return;
+  }
+
+
+  if(!movieLink){
+
+    alert(
+      "Movie link bharo."
+    );
+
+    return;
+  }
+
+
+  /*
+    Poster:
+    Uploaded image gets priority.
+    Otherwise poster URL is used.
+  */
+
+  const poster =
+    posterData ||
+    posterUrl ||
+    createPoster(title);
+
+
+  const movie={
+
+    id:Date.now(),
+
+    title:title,
+
+    poster:poster,
+
+    category:category,
+
+    year:year || "N/A",
+
+    rating:rating || "N/A",
+
+    description:description,
+
+    link:movieLink
+
+  };
+
+
+  movies.push(movie);
+
+
+  try{
+
+    localStorage.setItem(
+      "PLUS2_MOVIES",
+      JSON.stringify(movies)
+    );
+
+  }catch(error){
+
+    alert(
+      "Poster bahut bada hai. Chhoti image use karo."
+    );
+
+    movies.pop();
+
+    return;
+  }
+
+
+  clearForm();
+
+  renderMovies();
+
+  redFlash();
+
+  createSparks(
+    event.clientX,
+    event.clientY
+  );
+}
+
+
+/* ================================
+   CLEAR FORM
+================================ */
+
+function clearForm(){
+
+  document.getElementById(
+    "movieTitle"
+  ).value="";
+
+  document.getElementById(
+    "posterFile"
+  ).value="";
+
+  document.getElementById(
+    "posterUrl"
+  ).value="";
+
+  document.getElementById(
+    "year"
+  ).value="";
+
+  document.getElementById(
+    "rating"
+  ).value="";
+
+  document.getElementById(
+    "description"
+  ).value="";
+
+  document.getElementById(
+    "movieLink"
+  ).value="";
+
+  document.getElementById(
+    "posterPreview"
+  ).style.display="none";
+
+  posterData="";
+}
+
+
+/* ================================
+   DEFAULT POSTER
+================================ */
+
+function createPoster(title){
+
+  const safeTitle =
+    encodeURIComponent(title);
+
+  return "data:image/svg+xml," +
+    encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg"
+           width="600"
+           height="900"
+           viewBox="0 0 600 900">
+
+        <rect
+          width="600"
+          height="900"
+          fill="#080507"/>
+
+        <text
+          x="300"
+          y="420"
+          fill="#ff174f"
+          font-size="55"
+          text-anchor="middle"
+          font-family="Arial"
+          font-weight="bold">
+          PLUS2
+        </text>
+
+        <text
+          x="300"
+          y="500"
+          fill="#ffffff"
+          font-size="27"
+          text-anchor="middle"
+          font-family="Arial">
+          ${safeTitle}
+        </text>
+
+      </svg>
+    `);
+}
+
+
+/* ================================
+   RENDER
+================================ */
+
+function renderMovies(){
+
+  const grid =
+    document.getElementById(
+      "movieGrid"
+    );
+
+
+  let filtered =
+    movies;
+
+
+  if(currentFilter !== "All"){
+
+    filtered =
+      movies.filter(
+        movie =>
+          movie.category ===
+          currentFilter
+      );
+
+  }
+
+
+  if(!filtered.length){
+
+    grid.innerHTML=`
+
+      <div class="empty">
+        🎬 No movies found.
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  grid.innerHTML =
+    filtered.map(movie => `
+
+      <article
+        class="movie-card"
+        onclick="cardTap(event,this)"
+      >
+
+        <img
+          class="poster"
+          src="${safeAttr(movie.poster)}"
+          alt="${safeAttr(movie.title)}"
+          onerror="this.src='${createPoster(movie.title)}'"
+        >
+
+
+        <div class="movie-info">
+
+          <div class="movie-title">
+            ${safeHTML(movie.title)}
+          </div>
+
+          <div class="meta">
+
+            ${safeHTML(movie.category)}
+            •
+            ${safeHTML(movie.year)}
+
+            <span class="rating">
+              ⭐ ${safeHTML(movie.rating)}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="actions">
+
+          <a
+            class="action-btn"
+            href="${safeAttr(movie.link)}"
+            target="_blank"
+            rel="noopener"
+            onclick="event.stopPropagation()"
+          >
+            ▶ WATCH
+          </a>
+
+
+          <a
+            class="action-btn"
+            href="${safeAttr(movie.link)}"
+            download
+            onclick="event.stopPropagation()"
+          >
+            ⬇ DOWNLOAD
+          </a>
+
+
+          <button
+            class="action-btn"
+            onclick="
+              event.stopPropagation();
+              deleteMovie(${movie.id});
+            "
+          >
+            🗑 DELETE
+          </button>
+
+        </div>
+
+      </article>
+
+    `).join("");
+}
+
+
+/* ================================
+   FILTER
+================================ */
+
+function setFilter(filter,button){
+
+  currentFilter =
+    filter;
+
+
+  document
+    .querySelectorAll(".filter-btn")
+    .forEach(
+      btn =>
+        btn.classList.remove("active")
+    );
+
+
+  button.classList.add("active");
+
+
+  renderMovies();
+
+  redFlash();
+}
+
+
+/* ================================
+   CARD TAP
+================================ */
+
+function cardTap(event,card){
+
+  if(
+    event.target.closest("a") ||
+    event.target.closest("button")
+  ){
+
+    return;
+  }
+
+
+  card.classList.remove(
+    "active"
+  );
+
+  void card.offsetWidth;
+
+  card.classList.add(
+    "active"
+  );
+
+
+  createSparks(
+    event.clientX,
+    event.clientY
+  );
+
+
+  setTimeout(()=>{
+
+    card.classList.remove(
+      "active"
+    );
+
+  },1200);
+}
+
+
+/* ================================
+   SPARKS
+================================ */
+
+function createSparks(x,y){
+
+  for(
+    let i=0;
+    i<20;
+    i++
+  ){
+
+    const spark =
+      document.createElement(
+        "div"
+      );
+
+
+    spark.className =
+      "spark";
+
+
+    spark.style.left =
+      x+"px";
+
+
+    spark.style.top =
+      y+"px";
+
+
+    const angle =
+      Math.random() *
+      Math.PI *
+      2;
+
+
+    const distance =
+      30 +
+      Math.random()*120;
+
+
+    spark.style.setProperty(
+      "--x",
+      Math.cos(angle) *
+      distance +
+      "px"
+    );
+
+
+    spark.style.setProperty(
+      "--y",
+      Math.sin(angle) *
+      distance +
+      "px"
+    );
+
+
+    document.body.appendChild(
+      spark
+    );
+
+
+    setTimeout(
+      () => spark.remove(),
+      750
+    );
+
+  }
+}
+
+
+/* ================================
+   DOCUMENT LISTENER
+================================ */
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    const button =
+      event.target.closest(
+        "button"
+      );
+
+
+    if(!button){
+      return;
+    }
+
+
+    redFlash();
+
+  }
+);
+
+
+/* ================================
+   FLASH
+================================ */
+
+function redFlash(){
+
+  const flash =
+    document.getElementById(
+      "flash"
+    );
+
+
+  flash.classList.remove(
+    "show"
+  );
+
+  void flash.offsetWidth;
+
+  flash.classList.add(
+    "show"
+  );
+}
+
+
+/* ================================
+   NAV
+================================ */
+
+function tapEffect(event){
+
+  redFlash();
+
+  createSparks(
+    event.clientX,
+    event.clientY
+  );
+}
+
+
+/* ================================
+   DELETE
+================================ */
+
+function deleteMovie(id){
+
+  movies =
+    movies.filter(
+      movie =>
+        movie.id !== id
+    );
+
+
+  localStorage.setItem(
+    "PLUS2_MOVIES",
+    JSON.stringify(movies)
+  );
+
+
+  renderMovies();
+
+  redFlash();
+}
+
+
+/* ================================
+   SAFE HTML
+================================ */
+
+function safeHTML(text){
+
+  return String(text).replace(
+    /[&<>"']/g,
+    function(c){
+
+      return {
+
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+
+      }[c];
+
+    }
+  );
+}
+
+
+/* ================================
+   SAFE ATTRIBUTE
+================================ */
+
+function safeAttr(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+}
+
+
+/* ================================
+   START
+================================ */
+
+renderMovies();
+
+</script>
+
+</body>
+    </html>

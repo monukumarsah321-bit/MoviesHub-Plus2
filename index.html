@@ -1,0 +1,911 @@
+<!-- ================= PLUS2 MOVIE SYSTEM ================= -->
+
+<section id="admin" class="admin-box">
+  <h2>🎬 Add Movie by Link</h2>
+
+  <input id="movieTitle" type="text" placeholder="Movie name">
+
+  <input
+    id="movieLink"
+    type="url"
+    placeholder="Paste direct movie link (.mp4 / .webm)"
+  >
+
+  <button onclick="addMovie()">＋ ADD MOVIE</button>
+</section>
+
+
+<section class="movies-section">
+  <h2>🔥 PLUS2 MOVIES</h2>
+  <div id="movieGrid" class="movie-grid"></div>
+</section>
+
+
+<!-- RED SCREEN FLASH -->
+<div class="red-flash" id="redFlash"></div>
+
+
+<style>
+
+/* =====================================================
+   PLUS2 BLACK + PREMIUM RED THEME
+   ===================================================== */
+
+:root {
+  --red: #ff003c;
+  --dark-red: #8b001f;
+  --deep-red: #35000d;
+  --black: #050505;
+}
+
+
+/* ADMIN */
+
+.admin-box {
+  margin: 30px auto;
+  padding: 25px;
+  max-width: 700px;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #26000b,
+      #100509 45%,
+      #050505
+    );
+
+  border: 1px solid #6d001b;
+  border-radius: 20px;
+
+  box-shadow:
+    0 0 20px #ff003c22,
+    inset 0 0 30px #ff003c0c;
+}
+
+.admin-box h2 {
+  color: #fff;
+  text-shadow: 0 0 12px #ff003c;
+}
+
+.admin-box input {
+  width: 100%;
+  box-sizing: border-box;
+
+  margin: 8px 0;
+  padding: 14px;
+
+  border-radius: 12px;
+
+  border: 1px solid #4b0013;
+
+  background: #080607;
+
+  color: white;
+
+  outline: none;
+
+  transition: .3s;
+}
+
+.admin-box input:focus {
+  border-color: var(--red);
+
+  box-shadow:
+    0 0 10px #ff003c66,
+    0 0 25px #ff003c22;
+}
+
+
+/* BUTTONS */
+
+.admin-box button,
+.movie-card button {
+
+  margin-top: 10px;
+
+  padding: 12px 18px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff003c,
+      #9d0026,
+      #520014
+    );
+
+  color: white;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 10px #ff003c33;
+
+  transition: .2s;
+}
+
+.admin-box button:hover,
+.movie-card button:hover {
+
+  box-shadow:
+    0 0 12px #ff003c,
+    0 0 28px #ff003c55;
+
+  transform: translateY(-2px);
+}
+
+.admin-box button:active,
+.movie-card button:active {
+
+  transform: scale(.94);
+
+  box-shadow:
+    0 0 15px #ff003c,
+    0 0 35px #ff003c;
+}
+
+
+/* MOVIE GRID */
+
+.movies-section {
+  padding: 10px;
+}
+
+.movies-section h2 {
+
+  color: white;
+
+  text-shadow:
+    0 0 8px #ff003c,
+    0 0 20px #ff003c55;
+}
+
+
+.movie-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(220px, 1fr)
+    );
+
+  gap: 20px;
+}
+
+
+/* MOVIE CARD */
+
+.movie-card {
+
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 16px;
+
+  border-radius: 20px;
+
+  background:
+
+    radial-gradient(
+      circle at top,
+      #21000a,
+      #0b0709 45%,
+      #050505
+    );
+
+  border: 1px solid #4e0014;
+
+  box-shadow:
+    0 0 15px #ff003c15;
+
+  transition:
+    transform .35s,
+    box-shadow .35s;
+}
+
+
+/* MOVIE CARD HOVER */
+
+.movie-card:hover {
+
+  transform:
+    translateY(-5px);
+
+  box-shadow:
+    0 0 15px #ff003c44,
+    0 0 35px #ff003c22;
+}
+
+
+/* MOVIE TITLE */
+
+.movie-card h3 {
+
+  color: white;
+
+  margin-top: 8px;
+
+  text-shadow:
+    0 0 8px #ff003c55;
+}
+
+
+/* VIDEO / POSTER */
+
+.movie-card video {
+
+  width: 100%;
+
+  border-radius: 14px;
+
+  display: block;
+
+  background: #000;
+
+  transition: .35s;
+}
+
+
+/* =====================================================
+   PREMIUM RED LIGHT EFFECT
+   ===================================================== */
+
+.movie-card::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: -4px;
+
+  border-radius: 22px;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  background:
+    conic-gradient(
+      transparent,
+      transparent 20%,
+      #ff003c,
+      #ff003c,
+      transparent 45%,
+      transparent 70%,
+      #8b001f,
+      transparent
+    );
+
+  filter: blur(10px);
+
+  z-index: 0;
+}
+
+
+.movie-card > * {
+
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* TAP ACTIVE */
+
+.movie-card.premium-active {
+
+  transform: scale(1.015);
+
+  box-shadow:
+
+    0 0 10px #ff003c,
+    0 0 25px #ff003c,
+    0 0 55px #8b001f,
+    inset 0 0 25px #ff003c22;
+}
+
+
+.movie-card.premium-active::before {
+
+  opacity: 1;
+
+  animation:
+    premiumRedLight 1.2s ease-out;
+}
+
+
+.movie-card.premium-active video {
+
+  box-shadow:
+
+    0 0 8px #ff003c,
+    0 0 25px #8b001f;
+}
+
+
+/* MOVING RED LIGHT */
+
+@keyframes premiumRedLight {
+
+  0% {
+
+    transform:
+      rotate(0deg)
+      scale(.75);
+
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: .9;
+  }
+
+  100% {
+
+    transform:
+      rotate(360deg)
+      scale(1.15);
+
+    opacity: 0;
+  }
+}
+
+
+/* =====================================================
+   RED SPARKS / CHINGARI
+   ===================================================== */
+
+.red-spark {
+
+  position: fixed;
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #ff003c;
+
+  pointer-events: none;
+
+  z-index: 99999;
+
+  box-shadow:
+
+    0 0 6px #ff003c,
+    0 0 14px #ff003c,
+    0 0 25px #8b001f;
+
+  animation:
+    sparkFly .7s ease-out forwards;
+}
+
+
+@keyframes sparkFly {
+
+  from {
+
+    transform:
+      translate(0,0)
+      scale(1);
+
+    opacity: 1;
+  }
+
+  to {
+
+    transform:
+      translate(
+        var(--x),
+        var(--y)
+      )
+      scale(0);
+
+    opacity: 0;
+  }
+}
+
+
+/* =====================================================
+   RED SCREEN FLASH
+   ===================================================== */
+
+.red-flash {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: #ff003c;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  z-index: 99998;
+}
+
+
+.red-flash.active {
+
+  animation:
+    redFlashAnimation .22s ease-out;
+}
+
+
+@keyframes redFlashAnimation {
+
+  0% {
+    opacity: .14;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+</style>
+
+
+<script>
+
+/* =====================================================
+   MOVIE DATA
+   ===================================================== */
+
+let movies =
+  JSON.parse(
+    localStorage.getItem("PLUS2_MOVIES") || "[]"
+  );
+
+
+/* =====================================================
+   ADD MOVIE
+   ===================================================== */
+
+function addMovie() {
+
+  const title =
+    document
+      .getElementById("movieTitle")
+      .value
+      .trim();
+
+  const link =
+    document
+      .getElementById("movieLink")
+      .value
+      .trim();
+
+
+  if (!title || !link) {
+
+    alert(
+      "Movie name aur movie link dono bharo."
+    );
+
+    return;
+  }
+
+
+  const movie = {
+
+    id: Date.now(),
+
+    title: title,
+
+    link: link
+
+  };
+
+
+  movies.push(movie);
+
+
+  localStorage.setItem(
+    "PLUS2_MOVIES",
+    JSON.stringify(movies)
+  );
+
+
+  document.getElementById(
+    "movieTitle"
+  ).value = "";
+
+
+  document.getElementById(
+    "movieLink"
+  ).value = "";
+
+
+  renderMovies();
+
+
+  /* RED EFFECT */
+
+  screenRedFlash();
+}
+
+
+/* =====================================================
+   SHOW MOVIES
+   ===================================================== */
+
+function renderMovies() {
+
+  const grid =
+    document.getElementById(
+      "movieGrid"
+    );
+
+
+  if (!movies.length) {
+
+    grid.innerHTML =
+      "<p style='color:#aaa'>No movies added yet.</p>";
+
+    return;
+  }
+
+
+  grid.innerHTML = movies
+    .map(movie => `
+
+      <div
+        class="movie-card"
+        onclick="movieTap(event, this)"
+      >
+
+        <h3>
+          🎬 ${escapeHTML(movie.title)}
+        </h3>
+
+
+        <video
+          controls
+          preload="metadata"
+          playsinline
+        >
+
+          <source
+            src="${escapeAttr(movie.link)}"
+          >
+
+          Your browser does not support
+          video playback.
+
+        </video>
+
+
+        <a
+          href="${escapeAttr(movie.link)}"
+          target="_blank"
+        >
+
+          <button
+            onclick="event.stopPropagation()"
+          >
+            ▶ WATCH
+          </button>
+
+        </a>
+
+
+        <a
+          href="${escapeAttr(movie.link)}"
+          download
+        >
+
+          <button
+            onclick="event.stopPropagation()"
+          >
+            ⬇ DOWNLOAD
+          </button>
+
+        </a>
+
+
+        <button
+          onclick="
+            event.stopPropagation();
+            deleteMovie(${movie.id});
+          "
+        >
+
+          🗑 DELETE
+
+        </button>
+
+      </div>
+
+    `)
+    .join("");
+}
+
+
+/* =====================================================
+   MOVIE TAP
+   ===================================================== */
+
+function movieTap(event, card) {
+
+  /* Don't trigger card effect
+     when using video controls */
+
+  if (
+    event.target.tagName === "BUTTON" ||
+    event.target.tagName === "VIDEO" ||
+    event.target.tagName === "SOURCE"
+  ) {
+    return;
+  }
+
+
+  premiumRedEffect(
+    card,
+    event
+  );
+}
+
+
+/* =====================================================
+   PREMIUM RED EFFECT
+   ===================================================== */
+
+function premiumRedEffect(
+  card,
+  event
+) {
+
+  card.classList.remove(
+    "premium-active"
+  );
+
+
+  /* Restart animation */
+
+  void card.offsetWidth;
+
+
+  card.classList.add(
+    "premium-active"
+  );
+
+
+  setTimeout(() => {
+
+    card.classList.remove(
+      "premium-active"
+    );
+
+  }, 1300);
+
+
+  const rect =
+    card.getBoundingClientRect();
+
+
+  const centerX =
+    event
+      ? event.clientX
+      : rect.left +
+        rect.width / 2;
+
+
+  const centerY =
+    event
+      ? event.clientY
+      : rect.top +
+        rect.height / 2;
+
+
+  /* CREATE SPARKS */
+
+  for (
+    let i = 0;
+    i < 16;
+    i++
+  ) {
+
+    const spark =
+      document.createElement(
+        "div"
+      );
+
+
+    spark.className =
+      "red-spark";
+
+
+    spark.style.left =
+      centerX + "px";
+
+
+    spark.style.top =
+      centerY + "px";
+
+
+    const angle =
+      Math.random() *
+      Math.PI * 2;
+
+
+    const distance =
+      35 +
+      Math.random() * 110;
+
+
+    spark.style.setProperty(
+      "--x",
+      Math.cos(angle) *
+        distance +
+        "px"
+    );
+
+
+    spark.style.setProperty(
+      "--y",
+      Math.sin(angle) *
+        distance +
+        "px"
+    );
+
+
+    document.body.appendChild(
+      spark
+    );
+
+
+    setTimeout(() => {
+
+      spark.remove();
+
+    }, 750);
+  }
+}
+
+
+/* =====================================================
+   BUTTON / OPTION TAP EFFECT
+   ===================================================== */
+
+document.addEventListener(
+  "click",
+  function(event) {
+
+    const element =
+      event.target.closest(
+        "button, select, option"
+      );
+
+
+    if (!element) return;
+
+
+    screenRedFlash();
+
+
+    /* Button ke andar movie card hai
+       to halka red glow */
+
+    const card =
+      element.closest(
+        ".movie-card"
+      );
+
+
+    if (card) {
+
+      premiumRedEffect(
+        card,
+        event
+      );
+    }
+
+  }
+);
+
+
+/* =====================================================
+   RED SCREEN FLASH
+   ===================================================== */
+
+function screenRedFlash() {
+
+  const flash =
+    document.getElementById(
+      "redFlash"
+    );
+
+
+  flash.classList.remove(
+    "active"
+  );
+
+
+  void flash.offsetWidth;
+
+
+  flash.classList.add(
+    "active"
+  );
+}
+
+
+/* =====================================================
+   DELETE
+   ===================================================== */
+
+function deleteMovie(id) {
+
+  movies =
+    movies.filter(
+      movie =>
+        movie.id !== id
+    );
+
+
+  localStorage.setItem(
+    "PLUS2_MOVIES",
+    JSON.stringify(movies)
+  );
+
+
+  renderMovies();
+
+
+  screenRedFlash();
+}
+
+
+/* =====================================================
+   SECURITY / HTML ESCAPE
+   ===================================================== */
+
+function escapeHTML(text) {
+
+  return text.replace(
+    /[&<>"']/g,
+    function(c) {
+
+      return {
+
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+
+      }[c];
+
+    }
+  );
+}
+
+
+function escapeAttr(text) {
+
+  return text
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+
+/* =====================================================
+   START
+   ===================================================== */
+
+renderMovies();
+
+  </script>

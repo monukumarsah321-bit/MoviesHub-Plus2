@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090511">
+<title>PLUS2 — Movies & Entertainment</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Inter,Arial,sans-serif;
+  color:#fff;
+  background:
+    radial-gradient(circle at 15% 5%,rgba(126,34,206,.28),transparent 32%),
+    radial-gradient(circle at 90% 20%,rgba(239,20,68,.20),transparent 28%),
+    linear-gradient(135deg,#050307,#0b0613 50%,#080309);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Ambient glow */
+body:before{
+  content:"";
+  position:fixed;
+  width:420px;
+  height:420px;
+  top:25%;
+  left:-180px;
+  background:#7c22ce;
+  filter:blur(150px);
+  opacity:.12;
+  pointer-events:none;
+}
+
+body:after{
+  content:"";
+  position:fixed;
+  width:400px;
+  height:400px;
+  right:-180px;
+  bottom:5%;
+  background:#ff174f;
+  filter:blur(150px);
+  opacity:.10;
+  pointer-events:none;
+}
+
+.container{
+  width:min(1180px,92%);
+  margin:auto;
+}
+
+/* HEADER */
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(20px);
+  background:rgba(5,3,8,.72);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.nav{
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:-2px;
+  background:linear-gradient(90deg,#ff174f,#9b5cff,#fff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.logo span{
+  color:#ff174f;
+}
+
+nav{
+  display:flex;
+  gap:28px;
+}
+
+nav a{
+  color:#b9b1c5;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+  transition:.25s;
+}
+
+nav a:hover{
+  color:#fff;
+}
+
+.search{
+  width:210px;
+  height:42px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.055);
+  border-radius:50px;
+  color:#fff;
+  outline:none;
+  padding:0 18px;
+}
+
+.search::placeholder{
+  color:#817887;
+}
+
+/* HERO */
+.hero{
+  min-height:650px;
+  display:flex;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-content{
+  max-width:700px;
+  padding:100px 0;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 15px;
+  border-radius:50px;
+  background:rgba(255,23,79,.09);
+  border:1px solid rgba(255,23,79,.3);
+  color:#ff5078;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:25px;
+}
+
+.hero h1{
+  font-size:clamp(50px,8vw,92px);
+  line-height:.95;
+  letter-spacing:-5px;
+  margin-bottom:25px;
+}
+
+.hero h1 strong{
+  display:block;
+  background:linear-gradient(90deg,#fff 15%,#c084fc 55%,#ff174f);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  color:#a9a1b0;
+  max-width:570px;
+  line-height:1.8;
+  font-size:16px;
+}
+
+.buttons{
+  display:flex;
+  gap:14px;
+  margin-top:32px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  text-decoration:none;
+  padding:15px 25px;
+  border-radius:14px;
+  font-weight:800;
+  font-size:14px;
+  transition:.25s;
+}
+
+.btn-primary{
+  color:#fff;
+  background:linear-gradient(135deg,#ff174f,#d41445);
+  box-shadow:0 12px 35px rgba(255,23,79,.25);
+}
+
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 45px rgba(255,23,79,.4);
+}
+
+.btn-secondary{
+  color:#fff;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.btn-secondary:hover{
+  background:rgba(255,255,255,.11);
+}
+
+/* floating orb */
+.orb{
+  position:absolute;
+  right:4%;
+  width:350px;
+  height:350px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 30%,#c084fc,transparent 25%),
+    radial-gradient(circle,#6419a5,#180722 68%);
+  box-shadow:
+    0 0 80px rgba(139,52,246,.35),
+    inset -30px -30px 80px rgba(0,0,0,.7);
+  opacity:.8;
+}
+
+.orb:after{
+  content:"PLUS2";
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  font-size:45px;
+  font-weight:900;
+  letter-spacing:-3px;
+  color:rgba(255,255,255,.75);
+}
+
+/* SECTION */
+section{
+  padding:65px 0;
+}
+
+.section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  margin-bottom:25px;
+}
+
+.section-head h2{
+  font-size:27px;
+  letter-spacing:-1px;
+}
+
+.section-head p{
+  color:#817887;
+  font-size:13px;
+}
+
+/* CARDS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.card{
+  position:relative;
+  overflow:hidden;
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+  border:1px solid rgba(255,255,255,.08);
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-7px);
+  border-color:rgba(255,23,79,.45);
+  box-shadow:0 20px 55px rgba(0,0,0,.35);
+}
+
+.poster{
+  height:300px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  background:
+    radial-gradient(circle at 50% 20%,rgba(192,132,252,.35),transparent 30%),
+    linear-gradient(145deg,#241331,#100914);
+}
+
+.poster:after{
+  content:"PLUS2";
+  font-size:27px;
+  font-weight:900;
+  letter-spacing:-2px;
+  color:rgba(255,255,255,.12);
+}
+
+.card-info{
+  padding:17px;
+}
+
+.card h3{
+  font-size:15px;
+  margin-bottom:7px;
+}
+
+.meta{
+  color:#82798b;
+  font-size:12px;
+}
+
+.tag{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:#ff174f;
+  padding:6px 9px;
+  border-radius:7px;
+  font-size:9px;
+  font-weight:900;
+}
+
+/* CATEGORY */
+.categories{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.category{
+  padding:13px 20px;
+  border-radius:12px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+  color:#c0b8c7;
+  font-size:13px;
+  font-weight:700;
+  transition:.25s;
+}
+
+.category:hover{
+  color:#fff;
+  background:rgba(255,23,79,.12);
+  border-color:rgba(255,23,79,.35);
+}
+
+/* FOOTER */
+footer{
+  margin-top:50px;
+  padding:45px 0;
+  border-top:1px solid rgba(255,255,255,.07);
+  text-align:center;
+}
+
+footer .logo{
+  display:inline-block;
+  margin-bottom:12px;
+}
+
+footer p{
+  color:#756d7c;
+  font-size:12px;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  nav{
+    display:none;
+  }
+
+  .search{
+    width:150px;
+  }
+
+  .orb{
+    right:-170px;
+    opacity:.35;
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:520px){
+  .nav{
+    min-height:68px;
+  }
+
+  .logo{
+    font-size:25px;
+  }
+
+  .search{
+    width:125px;
+    height:38px;
+  }
+
+  .hero{
+    min-height:570px;
+  }
+
+  .hero-content{
+    padding:75px 0;
+  }
+
+  .hero h1{
+    font-size:54px;
+    letter-spacing:-3px;
+  }
+
+  .hero p{
+    font-size:14px;
+  }
+
+  .grid{
+    gap:12px;
+  }
+
+  .poster{
+    height:230px;
+  }
+
+  .card-info{
+    padding:13px;
+  }
+
+  section{
+    padding:45px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="logo">PLUS<span>2</span></div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#movies">Movies</a>
+      <a href="#categories">Categories</a>
+    </nav>
+
+    <input class="search" type="search" placeholder="Search...">
+  </div>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-content">
+
+      <div class="badge">✦ PREMIUM ENTERTAINMENT</div>
+
+      <h1>
+        Discover.
+        <strong>Watch.</strong>
+        Enjoy.
+      </h1>
+
+      <p>
+        Welcome to PLUS2 — a modern cinematic entertainment experience
+        built with a premium dark interface, powerful visuals and smooth
+        mobile-first design.
+      </p>
+
+      <div class="buttons">
+        <a href="#movies" class="btn btn-primary">▶ Explore Movies</a>
+        <a href="#categories" class="btn btn-secondary">Browse Categories</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="orb"></div>
+</section>
+
+<section id="movies">
+  <div class="container">
+
+    <div class="section-head">
+      <div>
+        <h2>🔥 Trending Now</h2>
+      </div>
+      <p>Explore more →</p>
+    </div>
+
+    <div class="grid">
+
+      <article class="card">
+        <div class="poster">
+          <span class="tag">NEW</span>
+        </div>
+        <div class="card-info">
+          <h3>Movie One</h3>
+          <div class="meta">2026 • Movie • HD</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="poster">
+          <span class="tag">TRENDING</span>
+        </div>
+        <div class="card-info">
+          <h3>Movie Two</h3>
+          <div class="meta">2026 • Movie • HD</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="poster">
+          <span class="tag">HD</span>
+        </div>
+        <div class="card-info">
+          <h3>Movie Three</h3>
+          <div class="meta">2026 • Movie • HD</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="poster">
+          <span class="tag">NEW</span>
+        </div>
+        <div class="card-info">
+          <h3>Movie Four</h3>
+          <div class="meta">2026 • Movie • HD</div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="categories">
+  <div class="container">
+
+    <div class="section-head">
+      <h2>Browse Categories</h2>
+    </div>
+
+    <div class="categories">
+      <div class="category">Action</div>
+      <div class="category">Adventure</div>
+      <div class="category">Comedy</div>
+      <div class="category">Drama</div>
+      <div class="category">Sci-Fi</div>
+      <div class="category">Thriller</div>
+      <div class="category">Animation</div>
+      <div class="category">Romance</div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="logo">PLUS<span>2</span></div>
+    <p>© 2026 PLUS2 • Premium Entertainment Experience</p>
+  </div>
+</footer>
+
+</body>
+</html>

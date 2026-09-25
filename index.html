@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>PLUS2</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  color:#fff;
+  background:
+    radial-gradient(circle at 50% -15%,#520015 0%,#17050d 28%,#070508 58%,#000 100%);
+  overflow-x:hidden;
+}
+
+/* Background glow */
+body::before{
+  content:"";
+  position:fixed;
+  width:500px;
+  height:500px;
+  top:-280px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ff174f;
+  opacity:.09;
+  filter:blur(110px);
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:14px 20px;
+
+  background:rgba(3,2,4,.90);
+  backdrop-filter:blur(16px);
+
+  border-bottom:1px solid #470014;
+  box-shadow:0 5px 25px rgba(255,0,55,.08);
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:4px;
+
+  text-shadow:
+    0 0 8px #ff174f,
+    0 0 22px #ff174f,
+    0 0 40px #ff174f;
+}
+
+.nav-btn{
+  border:0;
+  background:transparent;
+  color:#fff;
+  font-size:23px;
+  cursor:pointer;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  min-height:330px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+  padding:50px 20px;
+
+  background:
+    radial-gradient(
+      circle,
+      #62001b 0%,
+      #260510 28%,
+      transparent 68%
+    );
+}
+
+.hero h1{
+  font-size:58px;
+  font-weight:900;
+  letter-spacing:6px;
+
+  text-shadow:
+    0 0 10px #ff174f,
+    0 0 30px #ff174f,
+    0 0 65px #9b0030;
+}
+
+.hero p{
+  margin-top:14px;
+  color:#c5bcc2;
+  font-size:15px;
+}
+
+.hero-line{
+  width:190px;
+  height:3px;
+  margin-top:22px;
+
+  border-radius:50px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    #ff174f,
+    #d89aff,
+    #ff174f,
+    transparent
+  );
+
+  box-shadow:
+    0 0 12px #ff174f,
+    0 0 20px #c27aff;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+  width:100%;
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+.section-title{
+  margin:20px 0;
+
+  font-size:24px;
+
+  text-shadow:
+    0 0 8px #ff174f,
+    0 0 18px #ff174f55;
+}
+
+/* ================= ADD MOVIE ================= */
+
+.admin-box{
+  max-width:700px;
+  margin:20px auto 35px;
+
+  padding:25px;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1b050d,
+      #090508
+    );
+
+  border:1px solid #62001d;
+
+  box-shadow:
+    0 0 22px #ff174f16,
+    inset 0 0 35px #b96cff08;
+}
+
+.admin-box h2{
+  margin-bottom:18px;
+
+  font-size:21px;
+
+  text-shadow:
+    0 0 8px #ff174f,
+    0 0 14px #bd6cff55;
+}
+
+.input{
+  width:100%;
+
+  margin:8px 0;
+  padding:15px;
+
+  border-radius:12px;
+
+  border:1px solid #410011;
+
+  background:#050405;
+  color:#fff;
+
+  outline:none;
+
+  transition:.25s;
+}
+
+.input::placeholder{
+  color:#777;
+}
+
+.input:focus{
+  border-color:#ff174f;
+
+  box-shadow:
+    0 0 10px #ff174f55,
+    0 0 18px #a85cff18;
+}
+
+.add-btn{
+  margin-top:10px;
+
+  padding:13px 20px;
+
+  border:0;
+  border-radius:11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff174f,
+      #9b002b
+    );
+
+  color:#fff;
+
+  font-weight:bold;
+  cursor:pointer;
+
+  box-shadow:
+    0 0 15px #ff174f40;
+
+  transition:.2s;
+}
+
+.add-btn:active{
+  transform:scale(.95);
+
+  box-shadow:
+    0 0 30px #ff174f,
+    0 0 45px #a95cff55;
+}
+
+/* ================= MOVIE GRID ================= */
+
+.movie-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fill,
+      minmax(220px,1fr)
+    );
+
+  gap:20px;
+}
+
+/* ================= MOVIE CARD ================= */
+
+.movie-card{
+  position:relative;
+
+  overflow:hidden;
+
+  padding:12px;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1a050c,
+      #080507
+    );
+
+  border:1px solid #4c0014;
+
+  box-shadow:
+    0 0 15px #ff174f12;
+
+  transition:
+    transform .3s,
+    box-shadow .3s;
+}
+
+.movie-card:hover{
+  transform:translateY(-5px);
+
+  box-shadow:
+    0 0 18px #ff174f50,
+    0 0 35px #a95cff20;
+}
+
+/* Moving red/purple light */
+.movie-card::before{
+  content:"";
+
+  position:absolute;
+  inset:-5px;
+
+  border-radius:25px;
+
+  background:
+    conic-gradient(
+      transparent 0deg,
+      transparent 70deg,
+      #ff174f 110deg,
+      #ff174f 145deg,
+      #c477ff 165deg,
+      transparent 210deg,
+      transparent 290deg,
+      #ff174f 330deg,
+      transparent 360deg
+    );
+
+  opacity:0;
+  filter:blur(9px);
+
+  pointer-events:none;
+}
+
+.movie-card.active::before{
+  opacity:1;
+
+  animation:
+    borderSpin 1.1s ease-out;
+}
+
+@keyframes borderSpin{
+  0%{
+    transform:rotate(0deg) scale(.8);
+    opacity:0;
+  }
+
+  20%{
+    opacity:1;
+  }
+
+  70%{
+    opacity:.95;
+  }
+
+  100%{
+    transform:rotate(360deg) scale(1.15);
+    opacity:0;
+  }
+}
+
+.movie-card>*{
+  position:relative;
+  z-index:2;
+}
+
+/* ================= POSTER / VIDEO ================= */
+
+.movie-video{
+  width:100%;
+
+  aspect-ratio:16/10;
+
+  display:block;
+
+  object-fit:cover;
+
+  background:#000;
+
+  border-radius:14px;
+
+  border:1px solid #31000b;
+
+  transition:.3s;
+}
+
+.movie-card.active .movie-video{
+  box-shadow:
+    0 0 10px #ff174f,
+    0 0 25px #ff174f,
+    0 0 40px #9c42ff44;
+}
+
+.movie-title{
+  padding:13px 3px 8px;
+
+  font-size:17px;
+
+  color:#fff;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* ================= BUTTONS ================= */
+
+.actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.action-btn{
+  flex:1;
+
+  min-width:75px;
+
+  padding:10px 8px;
+
+  border:0;
+  border-radius:9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e9003e,
+      #76001c
+    );
+
+  color:#fff;
+
+  font-weight:bold;
+  font-size:12px;
+
+  text-decoration:none;
+  text-align:center;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.action-btn:active{
+  transform:scale(.92);
+
+  box-shadow:
+    0 0 20px #ff174f,
+    0 0 30px #bd6cff55;
+}
+
+/* ================= CHINGARI ================= */
+
+.spark{
+  position:fixed;
+
+  width:5px;
+  height:5px;
+
+  border-radius:50%;
+
+  background:#ff174f;
+
+  z-index:99999;
+
+  pointer-events:none;
+
+  box-shadow:
+    0 0 6px #ff174f,
+    0 0 15px #ff174f,
+    0 0 22px #c477ff;
+
+  animation:
+    sparkMove .7s ease-out forwards;
+}
+
+@keyframes sparkMove{
+  to{
+    transform:
+      translate(
+        var(--x),
+        var(--y)
+      )
+      scale(0);
+
+    opacity:0;
+  }
+}
+
+/* ================= RED FLASH ================= */
+
+#flash{
+  position:fixed;
+
+  inset:0;
+
+  background:#ff174f;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  z-index:99998;
+}
+
+#flash.show{
+  animation:flash .2s ease-out;
+}
+
+@keyframes flash{
+  0%{
+    opacity:.13;
+  }
+
+  100%{
+    opacity:0;
+  }
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+  grid-column:1/-1;
+
+  padding:35px 10px;
+
+  color:#777;
+
+  text-align:center;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  margin-top:60px;
+
+  padding:30px;
+
+  text-align:center;
+
+  color:#666;
+
+  border-top:1px solid #260009;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px){
+
+  .hero{
+    min-height:280px;
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+
+  .container{
+    padding:12px;
+  }
+
+  .movie-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+
+    gap:10px;
+  }
+
+  .movie-card{
+    padding:8px;
+    border-radius:15px;
+  }
+
+  .movie-title{
+    font-size:14px;
+  }
+
+  .action-btn{
+    font-size:10px;
+    padding:9px 5px;
+  }
+
+  .admin-box{
+    padding:18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+  <div class="logo">
+    PLUS2
+  </div>
+
+  <button
+    class="nav-btn"
+    onclick="tapEffect(event)"
+  >
+    ☰
+  </button>
+
+</nav>
+
+
+<section class="hero">
+
+  <h1>PLUS2</h1>
+
+  <p>
+    Premium Movies Experience
+  </p>
+
+  <div class="hero-line"></div>
+
+</section>
+
+
+<main class="container">
+
+  <section class="admin-box">
+
+    <h2>
+      🎬 Add Movie by Link
+    </h2>
+
+    <input
+      class="input"
+      id="movieTitle"
+      type="text"
+      placeholder="Movie name"
+    >
+
+    <input
+      class="input"
+      id="movieLink"
+      type="url"
+      placeholder="Paste authorized direct movie link"
+    >
+
+    <button
+      class="add-btn"
+      onclick="addMovie(event)"
+    >
+      ＋ ADD MOVIE
+    </button>
+
+  </section>
+
+
+  <h2 class="section-title">
+    🔥 PLUS2 MOVIES
+  </h2>
+
+
+  <div
+    id="movieGrid"
+    class="movie-grid"
+  ></div>
+
+</main>
+
+
+<footer>
+  © 2026 PLUS2
+</footer>
+
+
+<div id="flash"></div>
+
+
+<script>
+
+/* =================================
+   LOAD MOVIES
+================================= */
+
+let movies =
+  JSON.parse(
+    localStorage.getItem(
+      "PLUS2_MOVIES"
+    ) || "[]"
+  );
+
+
+/* =================================
+   ADD MOVIE
+================================= */
+
+function addMovie(event){
+
+  event.stopPropagation();
+
+  const title =
+    document
+      .getElementById("movieTitle")
+      .value
+      .trim();
+
+  const link =
+    document
+      .getElementById("movieLink")
+      .value
+      .trim();
+
+
+  if(!title || !link){
+
+    alert(
+      "Movie name aur authorized direct movie link bharo."
+    );
+
+    return;
+  }
+
+
+  /* Basic direct-video check */
+
+  const lowerLink =
+    link.toLowerCase();
+
+  const isVideo =
+    lowerLink.includes(".mp4") ||
+    lowerLink.includes(".webm") ||
+    lowerLink.includes(".m4v") ||
+    lowerLink.includes(".mov");
+
+
+  if(!isVideo){
+
+    alert(
+      "Direct video file link use karo (.mp4 / .webm / .m4v / .mov)."
+    );
+
+    return;
+  }
+
+
+  const movie = {
+
+    id:Date.now(),
+
+    title:title,
+
+    link:link
+
+  };
+
+
+  movies.push(movie);
+
+
+  localStorage.setItem(
+    "PLUS2_MOVIES",
+    JSON.stringify(movies)
+  );
+
+
+  document.getElementById(
+    "movieTitle"
+  ).value="";
+
+
+  document.getElementById(
+    "movieLink"
+  ).value="";
+
+
+  renderMovies();
+
+
+  redFlash();
+
+  createSparks(
+    event.clientX,
+    event.clientY
+  );
+
+}
+
+
+/* =================================
+   RENDER MOVIES
+================================= */
+
+function renderMovies(){
+
+  const grid =
+    document.getElementById(
+      "movieGrid"
+    );
+
+
+  if(!movies.length){
+
+    grid.innerHTML=`
+
+      <div class="empty">
+
+        🎬 No movies added yet.
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  grid.innerHTML =
+    movies.map(movie => `
+
+      <article
+        class="movie-card"
+        data-id="${movie.id}"
+        onclick="cardTap(event,this)"
+      >
+
+        <video
+          class="movie-video"
+          controls
+          preload="metadata"
+          playsinline
+        >
+
+          <source
+            src="${safeAttr(movie.link)}"
+          >
+
+        </video>
+
+
+        <div class="movie-title">
+
+          ${safeHTML(movie.title)}
+
+        </div>
+
+
+        <div class="actions">
+
+          <a
+            class="action-btn"
+            href="${safeAttr(movie.link)}"
+            target="_blank"
+            rel="noopener"
+            onclick="event.stopPropagation()"
+          >
+            ▶ WATCH
+          </a>
+
+
+          <a
+            class="action-btn"
+            href="${safeAttr(movie.link)}"
+            download
+            onclick="event.stopPropagation()"
+          >
+            ⬇ DOWNLOAD
+          </a>
+
+
+          <button
+            class="action-btn"
+            onclick="
+              event.stopPropagation();
+              deleteMovie(${movie.id});
+            "
+          >
+            🗑 DELETE
+          </button>
+
+        </div>
+
+      </article>
+
+    `).join("");
+}
+
+
+/* =================================
+   CARD TAP
+================================= */
+
+function cardTap(event,card){
+
+  if(
+    event.target.tagName==="VIDEO" ||
+    event.target.tagName==="BUTTON" ||
+    event.target.tagName==="A"
+  ){
+    return;
+  }
+
+
+  premiumEffect(
+    card,
+    event.clientX,
+    event.clientY
+  );
+
+}
+
+
+/* =================================
+   PREMIUM EFFECT
+================================= */
+
+function premiumEffect(card,x,y){
+
+  card.classList.remove("active");
+
+  void card.offsetWidth;
+
+  card.classList.add("active");
+
+
+  setTimeout(()=>{
+
+    card.classList.remove("active");
+
+  },1200);
+
+
+  createSparks(x,y);
+
+}
+
+
+/* =================================
+   CREATE CHINGARI
+================================= */
+
+function createSparks(x,y){
+
+  for(
+    let i=0;
+    i<20;
+    i++
+  ){
+
+    const spark =
+      document.createElement("div");
+
+
+    spark.className="spark";
+
+
+    spark.style.left =
+      x+"px";
+
+
+    spark.style.top =
+      y+"px";
+
+
+    const angle =
+      Math.random() *
+      Math.PI *
+      2;
+
+
+    const distance =
+      30 +
+      Math.random()*120;
+
+
+    spark.style.setProperty(
+      "--x",
+      Math.cos(angle) *
+      distance +
+      "px"
+    );
+
+
+    spark.style.setProperty(
+      "--y",
+      Math.sin(angle) *
+      distance +
+      "px"
+    );
+
+
+    document.body.appendChild(
+      spark
+    );
+
+
+    setTimeout(()=>{
+
+      spark.remove();
+
+    },750);
+
+  }
+
+}
+
+
+/* =================================
+   DOCUMENT TAP LISTENER
+================================= */
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    const button =
+      event.target.closest("button");
+
+
+    if(!button){
+
+      return;
+
+    }
+
+
+    redFlash();
+
+  }
+);
+
+
+/* =================================
+   RED FLASH
+================================= */
+
+function redFlash(){
+
+  const flash =
+    document.getElementById("flash");
+
+
+  flash.classList.remove("show");
+
+  void flash.offsetWidth;
+
+  flash.classList.add("show");
+
+}
+
+
+/* =================================
+   NAV TAP
+================================= */
+
+function tapEffect(event){
+
+  redFlash();
+
+
+  createSparks(
+    event.clientX,
+    event.clientY
+  );
+
+}
+
+
+/* =================================
+   DELETE MOVIE
+================================= */
+
+function deleteMovie(id){
+
+  movies =
+    movies.filter(
+      movie =>
+        movie.id !== id
+    );
+
+
+  localStorage.setItem(
+    "PLUS2_MOVIES",
+    JSON.stringify(movies)
+  );
+
+
+  renderMovies();
+
+  redFlash();
+
+}
+
+
+/* =================================
+   SAFE HTML
+================================= */
+
+function safeHTML(text){
+
+  return text.replace(
+    /[&<>"']/g,
+    function(c){
+
+      return {
+
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+
+      }[c];
+
+    }
+  );
+
+}
+
+
+/* =================================
+   SAFE ATTRIBUTE
+================================= */
+
+function safeAttr(text){
+
+  return text
+    .replace(/&/g,"&amp;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+
+}
+
+
+/* =================================
+   START
+================================= */
+
+renderMovies();
+
+</script>
+
+</body>
+  </html>

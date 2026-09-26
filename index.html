@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLUS2 • Movies & Videos</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:#050505;
+  color:#fff;
+  min-height:100vh;
+}
+
+header{
+  padding:24px 18px;
+  text-align:center;
+  background:
+    radial-gradient(circle at top,#4b0010 0%,#120006 35%,#050505 70%);
+  border-bottom:1px solid #35000b;
+}
+
+.logo{
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:5px;
+  color:#fff;
+  text-shadow:0 0 18px #8b001d;
+}
+
+.logo span{
+  color:#ff123f;
+}
+
+.tagline{
+  margin-top:7px;
+  color:#aaa;
+  font-size:13px;
+}
+
+.container{
+  width:min(1000px,94%);
+  margin:25px auto;
+}
+
+.panel{
+  background:linear-gradient(145deg,#13070a,#090909);
+  border:1px solid #3b0a13;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 0 35px rgba(120,0,25,.18);
+}
+
+.panel h2{
+  font-size:20px;
+  margin-bottom:18px;
+  color:#ff3158;
+}
+
+input,select,textarea{
+  width:100%;
+  margin-bottom:13px;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #351019;
+  outline:none;
+  background:#0c0c0c;
+  color:#fff;
+  font-size:15px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#b00028;
+  box-shadow:0 0 12px rgba(176,0,40,.25);
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(90deg,#8d001f,#d00032);
+  color:#fff;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 8px 25px rgba(150,0,35,.25);
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.search{
+  margin:25px 0 15px;
+}
+
+.section-title{
+  margin:25px 0 14px;
+  font-size:21px;
+}
+
+.movies{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:15px;
+}
+
+.movie{
+  position:relative;
+  background:#0d0d0d;
+  border:1px solid #321019;
+  border-radius:18px;
+  padding:16px;
+  overflow:hidden;
+  transition:.25s;
+}
+
+.movie:hover{
+  transform:translateY(-4px);
+  border-color:#8d0021;
+  box-shadow:0 0 25px rgba(130,0,30,.3);
+}
+
+.movie::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at top right,
+    rgba(130,0,30,.18),
+    transparent 45%);
+  pointer-events:none;
+}
+
+.poster{
+  height:210px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:15px;
+  background:
+    radial-gradient(circle,#3c0711,#100306 55%,#050505);
+  border:1px solid #4a101b;
+  color:#eee;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.movie h3{
+  margin:13px 0 7px;
+  font-size:17px;
+}
+
+.meta{
+  color:#aaa;
+  font-size:12px;
+  margin-bottom:8px;
+}
+
+.rating{
+  color:#ffd34d;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.description{
+  color:#aaa;
+  font-size:13px;
+  line-height:1.45;
+  min-height:38px;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:13px;
+}
+
+.actions a,
+.delete{
+  flex:1;
+  text-align:center;
+  text-decoration:none;
+  border-radius:9px;
+  padding:10px 5px;
+  font-size:12px;
+  font-weight:bold;
+  border:1px solid #5b0c1b;
+}
+
+.watch{
+  background:#8d001f;
+  color:#fff;
+}
+
+.download{
+  background:#16070a;
+  color:#ff4165;
+}
+
+.delete{
+  margin-top:8px;
+  width:100%;
+  background:#090909;
+  color:#ff3158;
+  cursor:pointer;
+}
+
+.empty{
+  text-align:center;
+  color:#777;
+  padding:40px 10px;
+}
+
+footer{
+  text-align:center;
+  color:#555;
+  padding:35px 10px;
+  font-size:12px;
+}
+
+@media(max-width:600px){
+  .logo{
+    font-size:28px;
+  }
+
+  .movies{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+
+  .movie{
+    padding:10px;
+  }
+
+  .poster{
+    height:175px;
+    font-size:16px;
+  }
+
+  .movie h3{
+    font-size:14px;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">PLUS<span>2</span></div>
+  <div class="tagline">Movies • Web Series • Videos</div>
+</header>
+
+<main class="container">
+
+  <section class="panel">
+    <h2>＋ Add Movie</h2>
+
+    <input id="movieName"
+           type="text"
+           placeholder="Movie Name">
+
+    <select id="category">
+      <option value="">Select Category</option>
+      <option>Hollywood</option>
+      <option>Bollywood</option>
+      <option>South Indian</option>
+      <option>Web Series</option>
+    </select>
+
+    <input id="year"
+           type="number"
+           placeholder="Release Year">
+
+    <input id="rating"
+           type="number"
+           min="0"
+           max="10"
+           step="0.1"
+           placeholder="IMDb Rating (0 - 10)">
+
+    <textarea id="description"
+              placeholder="Movie Description"></textarea>
+
+    <input id="movieUrl"
+           type="url"
+           placeholder="Movie / Video URL">
+
+    <button onclick="addMovie()">ADD MOVIE</button>
+  </section>
+
+  <input class="search"
+         id="search"
+         type="search"
+         placeholder="🔎 Search movies..."
+         oninput="showMovies()">
+
+  <h2 class="section-title">Movies & Videos</h2>
+
+  <div id="movies" class="movies"></div>
+
+</main>
+
+<footer>
+  PLUS2 • Premium Movies & Videos
+</footer>
+
+<script>
+let movies = JSON.parse(localStorage.getItem("plus2_movies") || "[]");
+
+function saveMovies(){
+  localStorage.setItem("plus2_movies", JSON.stringify(movies));
+}
+
+function addMovie(){
+
+  const name = document.getElementById("movieName").value.trim();
+  const category = document.getElementById("category").value;
+  const year = document.getElementById("year").value.trim();
+  const rating = document.getElementById("rating").value.trim();
+  const description = document.getElementById("description").value.trim();
+  const url = document.getElementById("movieUrl").value.trim();
+
+  if(!name){
+    alert("Movie name enter karo.");
+    return;
+  }
+
+  if(!category){
+    alert("Category select karo.");
+    return;
+  }
+
+  if(!url){
+    alert("Movie / Video URL enter karo.");
+    return;
+  }
+
+  const movie = {
+    id: Date.now(),
+    name,
+    category,
+    year,
+    rating,
+    description,
+    url
+  };
+
+  movies.unshift(movie);
+  saveMovies();
+  showMovies();
+
+  document.getElementById("movieName").value="";
+  document.getElementById("category").value="";
+  document.getElementById("year").value="";
+  document.getElementById("rating").value="";
+  document.getElementById("description").value="";
+  document.getElementById("movieUrl").value="";
+
+  alert("Movie added successfully!");
+}
+
+function deleteMovie(id){
+  if(confirm("Is movie ko delete karna hai?")){
+    movies = movies.filter(movie => movie.id !== id);
+    saveMovies();
+    showMovies();
+  }
+}
+
+function showMovies(){
+
+  const box = document.getElementById("movies");
+  const search = document.getElementById("search").value
+    .toLowerCase()
+    .trim();
+
+  const filtered = movies.filter(movie =>
+    movie.name.toLowerCase().includes(search) ||
+    movie.category.toLowerCase().includes(search)
+  );
+
+  if(filtered.length === 0){
+    box.innerHTML = `
+      <div class="empty">
+        No movies added yet.
+      </div>
+    `;
+    return;
+  }
+
+  box.innerHTML = filtered.map(movie => `
+
+    <article class="movie">
+
+      <div class="poster">
+        ${escapeHtml(movie.name)}
+      </div>
+
+      <h3>${escapeHtml(movie.name)}</h3>
+
+      <div class="meta">
+        ${escapeHtml(movie.category)}
+        ${movie.year ? " • " + escapeHtml(movie.year) : ""}
+      </div>
+
+      <div class="rating">
+        ⭐ ${movie.rating || "N/A"}/10
+      </div>
+
+      <div class="description">
+        ${escapeHtml(movie.description || "No description available.")}
+      </div>
+
+      <div class="actions">
+
+        <a class="watch"
+           href="${safeUrl(movie.url)}"
+           target="_blank"
+           rel="noopener">
+           WATCH
+        </a>
+
+        <a class="download"
+           href="${safeUrl(movie.url)}"
+           target="_blank"
+           rel="noopener"
+           download>
+           DOWNLOAD
+        </a>
+
+      </div>
+
+      <button class="delete"
+              onclick="deleteMovie(${movie.id})">
+        DELETE
+      </button>
+
+    </article>
+
+  `).join("");
+}
+
+function escapeHtml(text){
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function safeUrl(url){
+  try{
+    const u = new URL(url);
+
+    if(u.protocol === "http:" || u.protocol === "https:"){
+      return u.href;
+    }
+
+    return "#";
+  }catch{
+    return "#";
+  }
+}
+
+showMovies();
+</script>
+
+</body>
+  </html>

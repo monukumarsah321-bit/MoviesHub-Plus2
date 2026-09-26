@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://monukumarsah321-bit.github.io/MoviesHub-Plus2/sitemap.xml

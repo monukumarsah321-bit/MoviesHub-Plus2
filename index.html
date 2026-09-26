@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="google-site-verification" content="yv6Xce1MdezI9pVre1NSKIgzLBy15chOQoukPR_JBuM" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>All Movies Hub</title>
+
+<meta name="description" content="All Movies Hub - Movies, Web Series and Entertainment">
+
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4122483579384764"
+crossorigin="anonymous"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#080808;
+  color:#fff;
+}
+
+header{
+  padding:22px 15px;
+  text-align:center;
+  background:linear-gradient(135deg,#090909,#250008,#120018);
+  border-bottom:1px solid #4b0b18;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:2px;
+  color:#fff;
+  text-shadow:0 0 18px #ff1744;
+}
+
+.tagline{
+  margin-top:7px;
+  color:#c9b5d0;
+  font-size:12px;
+  letter-spacing:2px;
+}
+
+.hero{
+  margin:18px;
+  padding:35px 20px;
+  text-align:center;
+  border-radius:20px;
+  background:
+    radial-gradient(circle at top,#5c1025,#18060d 45%,#090909 80%);
+  border:1px solid #571326;
+  box-shadow:0 0 30px rgba(255,0,55,.15);
+}
+
+.hero h1{
+  font-size:30px;
+  line-height:1.2;
+}
+
+.hero h1 span{
+  color:#ff315b;
+}
+
+.hero p{
+  margin-top:12px;
+  color:#cfcfcf;
+}
+
+.categories{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:5px 18px 15px;
+}
+
+.categories button{
+  flex:none;
+  border:1px solid #65152b;
+  background:#160b10;
+  color:#eee;
+  padding:10px 15px;
+  border-radius:25px;
+}
+
+.categories button.active,
+.categories button:active{
+  background:#8d102d;
+  box-shadow:0 0 15px rgba(255,20,70,.4);
+}
+
+.container{
+  padding:0 18px 30px;
+}
+
+.admin{
+  background:#101010;
+  border:1px solid #35121c;
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:22px;
+}
+
+.admin h2{
+  margin-bottom:15px;
+  color:#ff315b;
+}
+
+input,select{
+  width:100%;
+  padding:13px;
+  margin:7px 0;
+  background:#070707;
+  border:1px solid #42202a;
+  color:#fff;
+  border-radius:10px;
+  outline:none;
+}
+
+.add-btn{
+  width:100%;
+  padding:13px;
+  margin-top:8px;
+  border:0;
+  border-radius:10px;
+  background:linear-gradient(90deg,#a30e32,#57106f);
+  color:#fff;
+  font-weight:bold;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.card{
+  overflow:hidden;
+  border-radius:16px;
+  background:#111;
+  border:1px solid #32131d;
+  box-shadow:0 8px 25px rgba(0,0,0,.5);
+}
+
+.poster{
+  height:240px;
+  display:flex;
+  align-items:flex-end;
+  padding:14px;
+  background:
+    linear-gradient(180deg,transparent 35%,rgba(0,0,0,.95)),
+    linear-gradient(135deg,#350b18,#120016);
+}
+
+.poster h3{
+  font-size:18px;
+}
+
+.info{
+  padding:12px;
+}
+
+.rating{
+  color:#ffd54a;
+  font-size:14px;
+  margin-bottom:9px;
+}
+
+.badge{
+  display:inline-block;
+  background:#5b1025;
+  color:#ffb5c4;
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:10px;
+  margin-bottom:8px;
+}
+
+.watch{
+  display:block;
+  text-align:center;
+  padding:10px;
+  border-radius:9px;
+  text-decoration:none;
+  background:#9c1235;
+  color:#fff;
+  font-weight:bold;
+}
+
+.empty{
+  text-align:center;
+  color:#999;
+  padding:30px 10px;
+  grid-column:1/-1;
+}
+
+footer{
+  text-align:center;
+  padding:25px 15px;
+  color:#777;
+  font-size:12px;
+  border-top:1px solid #241118;
+}
+
+@media(max-width:420px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .poster{
+    height:210px;
+  }
+
+  .hero h1{
+    font-size:26px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">ALL MOVIES HUB</div>
+  <div class="tagline">MOVIES • SERIES • ENTERTAINMENT</div>
+</header>
+
+<section class="hero">
+  <h1>Welcome to <span>All Movies Hub</span></h1>
+  <p>Discover movies, web series and entertainment.</p>
+</section>
+
+<div class="categories">
+  <button class="active" onclick="filterMovies('All',this)">All</button>
+  <button onclick="filterMovies('Hollywood',this)">Hollywood</button>
+  <button onclick="filterMovies('Bollywood',this)">Bollywood</button>
+  <button onclick="filterMovies('South Indian',this)">South Indian</button>
+  <button onclick="filterMovies('Web Series',this)">Web Series</button>
+</div>
+
+<main class="container">
+
+<section class="admin">
+  <h2>Add Movie / Series</h2>
+
+  <input id="movieName" type="text" placeholder="Movie / Series Name">
+
+  <input id="movieLink" type="url" placeholder="Authorized movie/video link">
+
+  <input id="movieRating" type="number" min="0" max="10" step="0.1" placeholder="IMDb Rating">
+
+  <select id="movieCategory">
+    <option value="Hollywood">Hollywood</option>
+    <option value="Bollywood">Bollywood</option>
+    <option value="South Indian">South Indian</option>
+    <option value="Web Series">Web Series</option>
+  </select>
+
+  <button class="add-btn" onclick="addMovie()">ADD MOVIE</button>
+</section>
+
+<section id="movieGrid" class="grid"></section>
+
+</main>
+
+<footer>
+  © 2026 All Movies Hub • Movies • Series • Entertainment
+</footer>
+
+<script>
+const STORAGE_KEY = "all_movies_hub_movies";
+
+let movies = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+function saveMovies(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(movies));
+}
+
+function addMovie(){
+
+  const name = document.getElementById("movieName").value.trim();
+  const link = document.getElementById("movieLink").value.trim();
+  const rating = document.getElementById("movieRating").value.trim();
+  const category = document.getElementById("movieCategory").value;
+
+  if(!name || !link){
+    alert("Movie name aur authorized video link enter karo.");
+    return;
+  }
+
+  movies.push({
+    id:Date.now(),
+    name:name,
+    link:link,
+    rating:rating || "N/A",
+    category:category
+  });
+
+  saveMovies();
+
+  document.getElementById("movieName").value="";
+  document.getElementById("movieLink").value="";
+  document.getElementById("movieRating").value="";
+
+  renderMovies("All");
+}
+
+function renderMovies(category="All"){
+
+  const grid = document.getElementById("movieGrid");
+
+  const filtered =
+    category === "All"
+    ? movies
+    : movies.filter(movie => movie.category === category);
+
+  if(filtered.length === 0){
+    grid.innerHTML = `
+      <div class="empty">
+        No movies added yet.<br>
+        Use the form above to add a movie or series.
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(movie => `
+    <article class="card">
+
+      <div class="poster">
+        <h3>${escapeHTML(movie.name)}</h3>
+      </div>
+
+      <div class="info">
+
+        <div class="badge">
+          ${escapeHTML(movie.category)}
+        </div>
+
+        <div class="rating">
+          ⭐ IMDb ${escapeHTML(movie.rating)}
+        </div>
+
+        <a
+          class="watch"
+          href="${safeURL(movie.link)}"
+          target="_blank"
+          rel="noopener noreferrer">
+          WATCH
+        </a>
+
+      </div>
+
+    </article>
+  `).join("");
+}
+
+function filterMovies(category,button){
+
+  document.querySelectorAll(".categories button")
+    .forEach(btn => btn.classList.remove("active"));
+
+  button.classList.add("active");
+
+  renderMovies(category);
+}
+
+function escapeHTML(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function safeURL(value){
+
+  try{
+    const url = new URL(value);
+
+    if(url.protocol === "http:" ||
+       url.protocol === "https:"){
+      return url.href;
+    }
+
+  }catch(e){}
+
+  return "#";
+}
+
+renderMovies("All");
+</script>
+
+</body>
+</html>

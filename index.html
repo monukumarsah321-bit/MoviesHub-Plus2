@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>All Movies Hub</title>
+<meta name="description" content="All Movies Hub - Movies, series and videos.">
+
+<!-- Google AdSense -->
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4122483579384764"
+crossorigin="anonymous"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:#fff;
+  background:
+    radial-gradient(circle at 50% -10%,#64152e 0,#220b15 25%,#080808 58%),
+    #050505;
+  min-height:100vh;
+}
+
+/* HEADER */
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  padding:16px;
+  text-align:center;
+  background:rgba(5,5,5,.92);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid #65152f;
+  box-shadow:0 5px 30px rgba(120,15,50,.25);
+}
+
+.logo{
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:2px;
+  background:linear-gradient(90deg,#fff,#e7a8bd,#fff);
+  -webkit-background-clip:text;
+  color:transparent;
+  text-shadow:0 0 20px rgba(200,40,100,.35);
+}
+
+.tagline{
+  margin-top:4px;
+  font-size:11px;
+  color:#ad8593;
+  letter-spacing:1px;
+}
+
+/* HERO */
+.hero{
+  min-height:330px;
+  display:flex;
+  align-items:flex-end;
+  padding:30px 18px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(to top,#050505 5%,rgba(5,5,5,.55) 55%,rgba(5,5,5,.15)),
+    radial-gradient(circle at 80% 20%,#7b193d55,transparent 35%);
+}
+
+.hero:before{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  right:-80px;
+  top:-70px;
+  border-radius:50%;
+  background:#8e174055;
+  filter:blur(45px);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:700px;
+}
+
+.hero h1{
+  font-size:clamp(35px,9vw,70px);
+  line-height:.95;
+  margin-bottom:14px;
+  letter-spacing:-2px;
+}
+
+.hero h1 span{
+  color:#c92d67;
+  text-shadow:0 0 25px #c92d6755;
+}
+
+.hero p{
+  color:#c5aab4;
+  max-width:570px;
+  line-height:1.6;
+  font-size:14px;
+}
+
+.hero-btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 20px;
+  border-radius:12px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:bold;
+  background:linear-gradient(135deg,#861638,#c52e68);
+  box-shadow:0 0 25px #a21c5050;
+}
+
+/* CONTAINER */
+.container{
+  width:94%;
+  max-width:1100px;
+  margin:25px auto;
+}
+
+/* ADS */
+.ad-box{
+  min-height:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:20px 0;
+  border:1px dashed #4c202e;
+  border-radius:15px;
+  color:#765763;
+  font-size:11px;
+}
+
+/* ADMIN */
+.panel{
+  padding:20px;
+  margin-bottom:22px;
+  border:1px solid #541329;
+  border-radius:20px;
+  background:linear-gradient(145deg,#171014,#090909);
+  box-shadow:0 0 30px #8b164015;
+}
+
+.panel h2{
+  font-size:20px;
+  margin-bottom:15px;
+  color:#e5b1c3;
+}
+
+input,select{
+  width:100%;
+  padding:13px;
+  margin:6px 0;
+  border:1px solid #5b1b30;
+  border-radius:10px;
+  background:#080808;
+  color:#fff;
+  outline:none;
+}
+
+input:focus,select:focus{
+  border-color:#c22c66;
+  box-shadow:0 0 14px #b4215a30;
+}
+
+button{
+  border:0;
+  padding:12px 16px;
+  margin:7px 5px 0 0;
+  border-radius:10px;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  background:linear-gradient(135deg,#811536,#c52d67);
+}
+
+.clear{
+  background:#241017;
+  border:1px solid #652039;
+}
+
+.note{
+  margin-top:10px;
+  color:#8e717c;
+  font-size:11px;
+  line-height:1.5;
+}
+
+/* CATEGORY */
+.category-bar{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:5px 0 14px;
+}
+
+.category-bar button{
+  white-space:nowrap;
+  background:#130b0f;
+  border:1px solid #5e1b32;
+  font-size:12px;
+}
+
+.category-bar button.active{
+  background:linear-gradient(135deg,#801536,#c42e67);
+}
+
+/* MOVIES */
+.movies{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
+  gap:15px;
+}
+
+.movie{
+  position:relative;
+  overflow:hidden;
+  border:1px solid #53152c;
+  border-radius:18px;
+  background:#0d0d0d;
+  box-shadow:0 8px 30px #000;
+  transition:.25s;
+}
+
+.movie:hover{
+  transform:translateY(-5px);
+  border-color:#bd2b63;
+  box-shadow:0 0 28px #b21d5835;
+}
+
+.poster{
+  height:245px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:15px;
+  background:
+    radial-gradient(circle at 50% 25%,#8d204955,transparent 35%),
+    linear-gradient(145deg,#30101c,#090909);
+}
+
+.poster-title{
+  font-size:20px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  text-shadow:0 0 20px #000;
+}
+
+.info{
+  padding:13px;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  margin-bottom:7px;
+  border-radius:20px;
+  font-size:10px;
+  color:#e6adbf;
+  background:#35101f;
+}
+
+.info h3{
+  font-size:17px;
+  margin-bottom:7px;
+}
+
+.rating{
+  color:#d8acbc;
+  font-size:12px;
+  margin-bottom:10px;
+}
+
+.watch{
+  display:block;
+  text-align:center;
+  padding:10px;
+  border-radius:9px;
+  color:#fff;
+  text-decoration:none;
+  font-size:12px;
+  font-weight:bold;
+  background:linear-gradient(135deg,#841638,#c52e68);
+}
+
+/* COMMENTS */
+.comments{
+  margin-top:12px;
+  padding-top:11px;
+  border-top:1px solid #32131e;
+}
+
+.comments-title{
+  font-size:12px;
+  color:#c89aaa;
+  margin-bottom:8px;
+}
+
+.comment-input{
+  display:flex;
+  gap:5px;
+}
+
+.comment-input input{
+  margin:0;
+  padding:9px;
+  font-size:11px;
+}
+
+.comment-input button{
+  margin:0;
+  padding:8px 10px;
+  font-size:10px;
+}
+
+.comment-list{
+  margin-top:8px;
+}
+
+.comment{
+  padding:7px 8px;
+  margin-top:5px;
+  border-radius:7px;
+  background:#151015;
+  color:#bda3ad;
+  font-size:11px;
+  word-break:break-word;
+}
+
+.empty{
+  grid-column:1/-1;
+  text-align:center;
+  padding:40px 10px;
+  color:#856773;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:35px 10px;
+  color:#725864;
+  font-size:11px;
+}
+
+@media(max-width:600px){
+  .hero{
+    min-height:300px;
+  }
+
+  .movies{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+
+  .poster{
+    height:210px;
+  }
+
+  .poster-title{
+    font-size:16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">ALL MOVIES HUB</div>
+  <div class="tagline">MOVIES • SERIES • ENTERTAINMENT</div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Welcome to <span>All Movies Hub</span></h1>
+
+    <p>
+      Discover movies and series in a premium dark cinematic experience.
+      Browse categories, ratings and authorized external video links.
+    </p>
+
+    <a href="#moviesSection" class="hero-btn">EXPLORE MOVIES</a>
+  </div>
+</section>
+
+<div class="container">
+
+  <div class="ad-box">
+    Advertisement
+  </div>
+
+  <!-- ADD MOVIE -->
+  <div class="panel">
+    <h2>＋ Add Movie / Series</h2>
+
+    <input id="movieName"
+           type="text"
+           placeholder="Movie / Series Name">
+
+    <input id="movieLink"
+           type="url"
+           placeholder="Authorized movie/video link (https://...)">
+
+    <input id="movieRating"
+           type="number"
+           min="0"
+           max="10"
+           step="0.1"
+           placeholder="IMDb Rating">
+
+    <select id="movieCategory">
+      <option>Hollywood</option>
+      <option>Bollywood</option>
+      <option>South Indian</option>
+      <option>Web Series</option>
+      <option>Other</option>
+    </select>
+
+    <button onclick="addMovie()">ADD MOVIE</button>
+    <button class="clear" onclick="clearMovies()">CLEAR MY MOVIES</button>
+
+    <div class="note">
+      Add only content or links that you are authorized to share.
+    </div>
+  </div>
+
+  <!-- CATEGORY -->
+  <div class="panel" id="moviesSection">
+    <h2>🎬 Browse</h2>
+
+    <div class="category-bar">
+      <button class="active" onclick="filterMovies('All',this)">All</button>
+      <button onclick="filterMovies('Hollywood',this)">Hollywood</button>
+      <button onclick="filterMovies('Bollywood',this)">Bollywood</button>
+      <button onclick="filterMovies('South Indian',this)">South Indian</button>
+      <button onclick="filterMovies('Web Series',this)">Web Series</button>
+      <button onclick="filterMovies('Other',this)">Other</button>
+    </div>
+  </div>
+
+  <!-- MOVIE LIST -->
+  <div id="movies" class="movies"></div>
+
+  <div class="ad-box">
+    Advertisement
+  </div>
+
+</div>
+
+<footer>
+  © 2026 All Movies Hub
+</footer>
+
+<script>
+const MOVIE_KEY = "all_movies_hub_movies";
+const COMMENT_KEY = "all_movies_hub_comments";
+
+let movies = JSON.parse(
+  localStorage.getItem(MOVIE_KEY) || "[]"
+);
+
+let comments = JSON.parse(
+  localStorage.getItem(COMMENT_KEY) || "{}"
+);
+
+let currentFilter = "All";
+
+function saveMovies(){
+  localStorage.setItem(MOVIE_KEY,JSON.stringify(movies));
+}
+
+function saveComments(){
+  localStorage.setItem(COMMENT_KEY,JSON.stringify(comments));
+}
+
+function addMovie(){
+
+  const name =
+    document.getElementById("movieName").value.trim();
+
+  const link =
+    document.getElementById("movieLink").value.trim();
+
+  const rating =
+    document.getElementById("movieRating").value.trim();
+
+  const category =
+    document.getElementById("movieCategory").value;
+
+  if(!name){
+    alert("Movie name enter karo.");
+    return;
+  }
+
+  if(!link){
+    alert("Movie/video link enter karo.");
+    return;
+  }
+
+  let url;
+
+  try{
+    url = new URL(link);
+  }catch(e){
+    alert("Valid http:// ya https:// link enter karo.");
+    return;
+  }
+
+  if(url.protocol !== "https:" &&
+     url.protocol !== "http:"){
+    alert("Valid web link enter karo.");
+    return;
+  }
+
+  movies.unshift({
+    id:Date.now(),
+    name:name,
+    link:link,
+    rating:rating,
+    category:category
+  });
+
+  saveMovies();
+
+  document.getElementById("movieName").value="";
+  document.getElementById("movieLink").value="";
+  document.getElementById("movieRating").value="";
+
+  renderMovies();
+
+  alert("Movie added successfully!");
+}
+
+function clearMovies(){
+
+  if(!movies.length){
+    alert("Koi movie added nahi hai.");
+    return;
+  }
+
+  if(confirm("Apni added movies delete karni hain?")){
+    movies=[];
+    saveMovies();
+    renderMovies();
+  }
+}
+
+function filterMovies(category,button){
+
+  currentFilter=category;
+
+  document
+    .querySelectorAll(".category-bar button")
+    .forEach(b=>b.classList.remove("active"));
+
+  button.classList.add("active");
+
+  renderMovies();
+}
+
+function addComment(movieId){
+
+  const input =
+    document.getElementById("comment-"+movieId);
+
+  const text=input.value.trim();
+
+  if(!text){
+    alert("Comment likho.");
+    return;
+  }
+
+  if(!comments[movieId]){
+    comments[movieId]=[];
+  }
+
+  comments[movieId].push({
+    text:text,
+    time:new Date().toLocaleString()
+  });
+
+  saveComments();
+
+  input.value="";
+
+  renderMovies();
+}
+
+function renderComments(movieId){
+
+  const list=comments[movieId] || [];
+
+  if(!list.length){
+    return `
+      <div class="comment">
+        No comments yet.
+      </div>
+    `;
+  }
+
+  return list.map(c=>`
+    <div class="comment">
+      ${escapeHTML(c.text)}
+    </div>
+  `).join("");
+}
+
+function renderMovies(){
+
+  const box=document.getElementById("movies");
+
+  const filtered =
+    currentFilter==="All"
+    ? movies
+    : movies.filter(
+        movie=>movie.category===currentFilter
+      );
+
+  if(!filtered.length){
+
+    box.innerHTML=`
+      <div class="empty">
+        🎬<br><br>
+        No movies added yet.
+      </div>
+    `;
+
+    return;
+  }
+
+  box.innerHTML=filtered.map(movie=>`
+
+    <article class="movie">
+
+      <div class="poster">
+        <div class="poster-title">
+          ${escapeHTML(movie.name)}
+        </div>
+      </div>
+
+      <div class="info">
+
+        <span class="badge">
+          ${escapeHTML(movie.category)}
+        </span>
+
+        <h3>
+          ${escapeHTML(movie.name)}
+        </h3>
+
+        <div class="rating">
+          ${
+            movie.rating
+            ? "⭐ IMDb "+escapeHTML(movie.rating)+"/10"
+            : "IMDb rating not added"
+          }
+        </div>
+
+        <a
+          class="watch"
+          href="${escapeAttribute(movie.link)}"
+          target="_blank"
+          rel="noopener noreferrer">
+          WATCH / VISIT
+        </a>
+
+        <div class="comments">
+
+          <div class="comments-title">
+            💬 Public Comments
+          </div>
+
+          <div class="comment-input">
+
+            <input
+              id="comment-${movie.id}"
+              type="text"
+              maxlength="300"
+              placeholder="Write a comment...">
+
+            <button
+              onclick="addComment(${movie.id})">
+              POST
+            </button>
+
+          </div>
+
+          <div class="comment-list">
+            ${renderComments(movie.id)}
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `).join("");
+}
+
+function escapeHTML(text){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function escapeAttribute(text){
+  return escapeHTML(text);
+}
+
+renderMovies();
+</script>
+
+</body>
+  </html>
